@@ -27,14 +27,3 @@ def index():
 def login():
     return render_template('slogin.html', 
                            title='Sign In')
-                           
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template(
-        'profile.html',
-        content='Profile Page',
-        twitter_conn=social.twitter.get_connection(),
-        facebook_conn=social.facebook.get_connection(),
-        foursquare_conn=social.foursquare.get_connection())
-

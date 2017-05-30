@@ -25,16 +25,11 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('slogin.html', 
-                           title='Sign In')
-                           
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template(
-        'profile.html',
-        content='Profile Page',
-        twitter_conn=social.twitter.get_connection(),
-        facebook_conn=social.facebook.get_connection(),
-        foursquare_conn=social.foursquare.get_connection())
-
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for OpenID="%s", remember_me=%s' %
+              (form.openid.data, str(form.remember_me.data)))
+        return redirect('/index')
+    return render_template('login.html', 
+                           title='Sign In',
+                           form=form)
